@@ -1,14 +1,11 @@
 /**
- * Assert if Condition `T` is boolean, return {@link AssertRes}
+ * Assert if Condition `T` is true, return {@link AssertPass}, **panic** on condition false
  */
-declare type Assert<T extends boolean> = T extends true
-  ? AssertRes.Success
-  : AssertRes.Fail;
+declare type Assert<T extends true> = T extends true ? AssertPass.Pass : never;
 
-/**
- * Assert if type `T` equals type `U`, return {@link AssertRes}
- */
-declare type AssertEq<T, U> = Assert<IsEqual<T, U>>;
+declare type AssertNot<T extends false> = T extends false
+  ? AssertPass.Pass
+  : never;
 
 /**
  * Determine whether type `T` equals type `U`, return boolean
@@ -18,7 +15,6 @@ declare type IsEqual<T, U> = T extends U ? (U extends T ? true : false) : false;
 /**
  * Type of assertion result
  */
-declare enum AssertRes {
-  Success = "Success",
-  Fail = "Failed",
+declare enum AssertPass {
+  Pass = "Pass",
 }

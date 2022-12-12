@@ -1,5 +1,3 @@
-/** @format */
-
 type StringToUnion<T extends string> = T extends `${infer First}${infer Reset}`
   ? First | StringToUnion<Reset>
   : never;
@@ -28,7 +26,7 @@ declare type Split<
   ? SEP extends ""
     ? []
     : [S]
-  : S extends `${infer R}`
+  : S extends `${any}`
   ? [S]
   : string[];
 

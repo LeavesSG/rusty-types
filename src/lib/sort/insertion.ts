@@ -21,5 +21,3 @@ type _InsertElement<
   : [T, ...R];
 
 type z = Insertion<Tuple100>;
-// @ts-expect-error
-type z1 = Insertion<Tuple500>;

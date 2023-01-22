@@ -1,7 +1,7 @@
-import { Ordering } from "../ord/ordering";
-import { ToPartial } from "../ord/partial";
-import { Split } from "../string/string";
 import { Digit, DigitChar, DigitCmp } from "./digit";
+import { Ordering } from "../ord/ordering";
+import { Split } from "../string/string";
+import { ToPartial } from "../ord/partial";
 
 /**
  * Convert a integer to a tuple of digit chars
@@ -9,7 +9,7 @@ import { Digit, DigitChar, DigitCmp } from "./digit";
 type IntTuple<T extends number> = Split<`${T}`, "">;
 
 /**
- * Compare two integers, return {@link PartOrdering}
+ * Compare two integers, return {@link Ordering}
  */
 export type UIntCmp<
   T extends number,
@@ -46,4 +46,7 @@ type _TupleLengthCompare<
   ? Ordering.Greater
   : UIntCmp<T["length"], U["length"]>;
 
-type Assertion = Assert<IsEqual<UIntCmp<132, 132>, Ordering.Equal>>;
+export type Test = [
+  // uint cmp
+  Assert<IsEqual<UIntCmp<132, 133>, Ordering.Less>>
+];

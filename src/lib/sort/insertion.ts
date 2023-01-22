@@ -1,6 +1,7 @@
-import { Tuple100, Tuple500 } from "../bench/tuple";
-import { UIntCmp } from "../integer/unsigned";
 import { Ordering } from "../ord/ordering";
+import { TupleSlice } from "../tuple/tuple";
+import { UIntCmp } from "../int/unsigned";
+import { type Tuple2K } from "../../bench/tuple/tuple";
 
 export type Insertion<T extends number[]> = _InsertionLoop<[], T>;
 type _InsertionLoop<
@@ -20,4 +21,8 @@ type _InsertElement<
     : [...Rest, Probe, T, ...R]
   : [T, ...R];
 
-type z = Insertion<Tuple100>;
+export module Bench {
+  // default compiler configuration only support N ~ 302
+  type Tuple = TupleSlice<Tuple2K, 10>;
+  export type Bench = Insertion<Tuple>;
+}

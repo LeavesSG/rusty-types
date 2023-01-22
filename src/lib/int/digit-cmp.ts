@@ -19,4 +19,9 @@ export type DigitCmp<
   U extends Digit | `${Digit}`
 > = DigitCmpSource[T][U];
 
-type Assertion = Assert<IsEqual<DigitCmp<"6", "6">, Ordering.Equal>>;
+export type Test = [
+  // DigitCmp
+  Assert<IsEqual<DigitCmp<"6", "6">, Ordering.Equal>>,
+  Assert<IsEqual<DigitCmp<5, "6">, Ordering.Less>>,
+  Assert<IsEqual<DigitCmp<9, 1>, Ordering.Greater>>
+];

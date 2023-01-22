@@ -1,5 +1,5 @@
-import { Ordering } from "../ord/ordering";
 import { IsEmpty } from "../tuple/tuple";
+import { Ordering } from "../ord/ordering";
 
 /**
  * Typeof a digit.
@@ -71,5 +71,3 @@ type _DigitCompareRec<
   : never;
 
 export type { DigitCmp } from "./digit-cmp";
-
-type Assertion = Assert<IsEqual<DigitCompareRec<2, 2>, Ordering.Equal>>;

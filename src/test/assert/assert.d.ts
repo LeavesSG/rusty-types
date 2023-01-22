@@ -18,3 +18,5 @@ declare type IsEqual<T, U> = T extends U ? (U extends T ? true : false) : false;
 declare enum AssertPass {
   Pass = "Pass",
 }
+
+declare type Todo = any;

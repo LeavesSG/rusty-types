@@ -1,5 +1,5 @@
 import { IsEmpty } from "../tuple/tuple";
-import { Ordering } from "../ord/ordering";
+import { Ordering } from "../ordering/ordering";
 
 /**
  * Typeof a digit.

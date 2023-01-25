@@ -1,6 +1,6 @@
-import { Ordering } from "../ord/ordering";
+import { Ordering } from "../ordering/ordering";
 import { TupleSlice } from "../tuple/tuple";
-import { UIntCmp } from "../int/unsigned";
+import { UIntCmp } from "../number/unsigned";
 import { type Tuple2K } from "../../bench/tuple/tuple";
 
 export type Insertion<T extends number[]> = _InsertionLoop<[], T>;

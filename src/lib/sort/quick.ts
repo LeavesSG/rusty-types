@@ -1,7 +1,7 @@
-import { Ordering } from "../ord/ordering";
+import { Ordering } from "../ordering/ordering";
 import { Tuple2K } from "../../bench/tuple/tuple";
 import { TupleSlice } from "../tuple/tuple";
-import { UIntCmp } from "../int/unsigned";
+import { UIntCmp } from "../number/unsigned";
 
 export type Quick<T extends number[]> = T extends [
   infer Anchor extends number,

@@ -1,5 +1,5 @@
 import { Digit } from "./digit";
-import { Ordering } from "../ord/ordering";
+import { Ordering } from "../ordering/ordering";
 
 // prettier-ignore
 type DigitCmpSource = [

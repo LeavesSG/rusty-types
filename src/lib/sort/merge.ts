@@ -1,7 +1,7 @@
-import { Ordering } from "../ord/ordering";
+import { Ordering } from "../ordering/ordering";
 import { Tuple2K } from "../../bench/tuple/tuple";
 import { TupleNest } from "../tuple/tuple";
-import { UIntCmp } from "../int/unsigned";
+import { UIntCmp } from "../number/unsigned";
 
 export type TupleMerge<T extends number[], U extends number[]> = T extends [
   infer T0 extends number,

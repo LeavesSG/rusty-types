@@ -1,6 +1,6 @@
-import { Ordering } from "../ord/ordering";
+import { Ordering } from "../ordering/ordering";
 import { Tuple2K } from "../../bench/tuple/tuple";
-import { UIntCmp } from "../int/unsigned";
+import { UIntCmp } from "../number/unsigned";
 
 export type Tuple = [any, ...any];
 export type TypedTuple<T> = [T, ...T[]];

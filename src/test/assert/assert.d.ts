@@ -19,4 +19,4 @@ declare enum AssertPass {
   Pass = "Pass",
 }
 
-declare type Todo = any;
+declare type Todo = never;

@@ -4,18 +4,28 @@ import { Split } from "../string/string";
 import { ToPartial } from "../ordering/partial";
 
 /**
- * Convert a integer to a tuple of digit chars
+ * Convert a integer to a tuple of digit chars.
+ *
+ * Usage:
+ * ```typescript
+ * type Tuple = UIntTuple<417655> // expected ['4','1','7','6','5','5']
+ * ```
  */
-type IntTuple<T extends number> = Split<`${T}`, "">;
+type UIntTuple<T extends number> = Split<`${T}`, "">;
 
 /**
- * Compare two integers, return {@link Ordering}
+ * Compare two integers, return {@link Ordering}.
+ *
+ * Usage:
+ * ```typescript
+ * type Ord = UIntCmp<37,73>; // expected Ordering.Less
+ * ```
  */
 export type UIntCmp<
   T extends number,
   U extends number
-> = IntTuple<T> extends infer TupleT extends DigitChar[]
-  ? IntTuple<U> extends infer TupleU extends DigitChar[]
+> = UIntTuple<T> extends infer TupleT extends DigitChar[]
+  ? UIntTuple<U> extends infer TupleU extends DigitChar[]
     ? _TupleLengthCompare<TupleT, TupleU> extends infer R extends Ordering
       ? R extends Ordering.Equal
         ? ToPartial<_TupleItemCompare<TupleT, TupleU>>
@@ -45,8 +55,3 @@ type _TupleLengthCompare<
   : U["length"] extends Digit
   ? Ordering.Greater
   : UIntCmp<T["length"], U["length"]>;
-
-export type Test = [
-  // uint cmp
-  Assert<IsEqual<UIntCmp<132, 133>, Ordering.Less>>
-];

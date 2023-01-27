@@ -2,8 +2,14 @@ import { IsEmpty } from "../tuple/tuple";
 import { Ordering } from "../ordering/ordering";
 
 /**
- * Typeof a digit.
+ * Enum of a digit.
+ * The minimal unit of a number that could be directly compared.
  *
+ * Usage:
+ * ```typescript
+ * const one = Digit.One;
+ * Assert<IsEqual<Digit.Two,2>> // expected: true
+ * ```
  */
 export enum Digit {
   Zero = 0,
@@ -19,12 +25,15 @@ export enum Digit {
 }
 
 /**
- * Typeof a digit char.
+ * Typeof a digit character.
+ * A media type used for number comparison.
  */
 export type DigitChar = `${Digit}`;
 
 /**
- * @const Tuple Const that contains all variant of number digit.
+ * @deprecated
+ * @constant Tuple Const that contains all variant of number digit.
+ * Used for recursion based digit comparison.
  */
 export type DigitTuple = [
   Digit.Zero,
@@ -38,11 +47,6 @@ export type DigitTuple = [
   Digit.Eight,
   Digit.Nine
 ];
-
-/**
- * Convert a digit from char, return {@link Digit}.
- */
-export type DigitFromChar<T extends DigitChar> = DigitTuple[T];
 
 /**
  * @deprecated

@@ -2,12 +2,37 @@ import { Ordering } from "../ordering/ordering";
 import { Tuple2K } from "../../bench/tuple/tuple";
 import { UIntCmp } from "../number/unsigned";
 
+/**
+ * "Tuple" is a type of array that contains fixed number of elements and fixed type on each position.
+ *
+ * Usage:
+ * ```typescript
+ * type ExmTuple = [1, 2, 3, 4, 5];
+ * ```
+ */
 export type Tuple = [any, ...any];
+
+/**
+ * A Tuple that all of its elements is type `T`.
+ *
+ * Usage:
+ * ```typescript
+ * type ExmTuple<number> = [1, 2, 3, 4, 5];
+ * type ExmTuple<string> = ["", "hello", "world"];
+ * ```
+ */
 export type TypedTuple<T> = [T, ...T[]];
 
+/**
+ * Whether a tuple is empty;
+ *
+ * Usage:
+ * ```typescript
+ * type Check = IsEmpty<[1,2,3]>; // expected false
+ * type Check2 = IsEmpty<[]>; // expected true
+ * ```
+ */
 export type IsEmpty<T extends [...any[]]> = IsEqual<T["length"], 0>;
-
-export type IsTuple<T extends any[]> = T extends Tuple ? true : false;
 
 type TupleSliceNaive<T extends Tuple, U extends number> = UIntCmp<
   T["length"],
@@ -54,7 +79,7 @@ export type TupleExclude<T extends Tuple, U> = _TupleExclude<
   TupleUnShift<T>,
   U
 >;
-export type _TupleExclude<
+type _TupleExclude<
   Checked extends any[],
   Checking,
   UnChecked extends any[],
@@ -77,11 +102,3 @@ type _TupleNest<Nested extends any[][], T extends any[]> = T extends [
 ]
   ? _TupleNest<[...Nested, [R]], Rest>
   : Nested;
-
-export type Test = {
-  IS_TUPLE: Assert<IsTuple<[1, 2, 3]>>;
-  TSlice: TupleSliceNaive<Tuple2K, 10>;
-  TMin: TupleMin<Test["TSlice"]>;
-  Exclude: TupleExclude<[1, 2, 3, 4, 5, 6, 7, 8, 9], 2>;
-  Nest: TupleNest<[1, 2, 3, 4, 5, 6, 7, 8, 9]>;
-};

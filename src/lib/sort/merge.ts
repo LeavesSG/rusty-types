@@ -1,5 +1,4 @@
 import { Ordering } from "../ordering/ordering";
-import { Tuple2K } from "../../bench/tuple/tuple";
 import { TupleNest } from "../tuple/tuple";
 import { UIntCmp } from "../number/unsigned";
 
@@ -40,11 +39,3 @@ type _MergeInner<
 ]
   ? _MergeInner<[...Merged, TupleMerge<R1, R2>], Rest>
   : [...Merged, ...Candidate];
-
-module Test {
-  // merge
-  type tupleMerge = TupleMerge<[1, 2], []>;
-  // this merge impl allows N ~ 900, and in this case, tuple slice seem to be the barrier
-  type tuple = import("../tuple/tuple").TupleSlice<Tuple2K, 10>;
-  type merge = Merge<tuple>;
-}

@@ -1,5 +1,4 @@
 import { Ordering } from "../ordering/ordering";
-import { Tuple2K } from "../../bench/tuple/tuple";
 import { UIntCmp } from "../number/unsigned";
 
 /**

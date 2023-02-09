@@ -1,7 +1,7 @@
 import { Digit, DigitChar, DigitCmp } from "./digit";
 import { Ordering } from "../ordering/ordering";
-import { Split } from "../string/string";
 import { ToPartial } from "../ordering/partial";
+import { Split } from "../string/string";
 
 /**
  * Convert a integer to a tuple of digit chars.

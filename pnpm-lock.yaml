@@ -1,13 +1,13 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@natsuha_sg/prettier-config': 1.0.0
-  prettier: 2.8.6
-  typescript: ^5.0.2
+  '@natsuha_sg/prettier-config': latest
+  prettier: latest
+  typescript: latest
 
 devDependencies:
   '@natsuha_sg/prettier-config': 1.0.0
-  prettier: 2.8.6
+  prettier: 2.8.7
   typescript: 5.0.2
 
 packages:
@@ -16,8 +16,8 @@ packages:
     resolution: {integrity: sha512-UiblhMrLpCsiR6WwXsbbnCuOJCrAm/4sTXonnuWQh6YmKFQYmwKne8L0hn7ICYgsHmbN0GDsWYl8N/tg2l4yyQ==}
     dev: true
 
-  /prettier/2.8.6:
-    resolution: {integrity: sha512-mtuzdiBbHwPEgl7NxWlqOkithPyp4VN93V7VeHVWBF+ad3I5avc0RVDT4oImXQy9H/AqxA2NSQH8pSxHW6FYbQ==}
+  /prettier/2.8.7:
+    resolution: {integrity: sha512-yPngTo3aXUUmyuTjeTUT75txrf+aMh9FiD7q9ZE/i6r0bPb22g4FsE6Y338PQX1bmfy08i9QQCB7/rcUAVntfw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true

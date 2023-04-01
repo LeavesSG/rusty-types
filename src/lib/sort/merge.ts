@@ -1,6 +1,7 @@
 import {Ordering} from "../ordering/ordering";
-import {Nest} from "../tuple/tuple";
+import {Nest, Slice} from "../tuple/tuple";
 import {UIntCmp} from "../number/unsigned";
+import {BenchSampleTuple2K} from "../../bench/tuple-sample/tuple";
 
 export type TupleMerge<T extends number[], U extends number[]> = T extends [
     infer T0 extends number,
@@ -39,3 +40,9 @@ type _MergeInner<
 ]
     ? _MergeInner<[...Merged, TupleMerge<R1, R2>], Rest>
     : [...Merged, ...Candidate];
+
+declare module Test {
+    // default compiler configuration only support N ~ 302
+    type Source = Slice<BenchSampleTuple2K, 50>;
+    type Bench = Merge<Source>;
+}

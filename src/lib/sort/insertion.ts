@@ -2,27 +2,26 @@ import {UIntCmp} from "../number/unsigned";
 import {Ordering} from "../ordering/ordering";
 import {Slice} from "../tuple/tuple";
 import {type BenchSampleTuple2K} from "../../bench/tuple-sample/tuple";
+import {Some} from "../option/option";
 
-export type Insertion<T extends number[]> = _InsertionLoop<[], T>;
-type _InsertionLoop<Left extends number[], Right extends number[]> = Right extends [
+export type Insertion<T extends number[], Aux extends number[] = []> = T extends [
     infer T extends number,
     ...infer Rest extends number[]
 ]
-    ? _InsertionLoop<_InsertElement<Left, T, []>, Rest>
-    : Left;
+    ? Insertion<Rest, Insert<Aux, T, []>>
+    : Aux;
 
-type _InsertElement<
-    L extends number[],
-    T extends number,
-    R extends number[]
-> = L extends [...infer Rest extends number[], infer Probe extends number]
-    ? UIntCmp<T, Probe> extends Ordering.Less
-        ? _InsertElement<[...Rest], T, [Probe, ...R]>
+type Insert<L extends number[], T extends number, R extends number[]> = L extends [
+    ...infer Rest extends number[],
+    infer Probe extends number
+]
+    ? UIntCmp<T, Probe> extends Some<Ordering.Less>
+        ? Insert<[...Rest], T, [Probe, ...R]>
         : [...Rest, Probe, T, ...R]
     : [T, ...R];
 
-export module Bench {
+declare module Test {
     // default compiler configuration only support N ~ 302
-    type Tuple = Slice<BenchSampleTuple2K, 10>;
-    export type Bench = Insertion<Tuple>;
+    type Source = Slice<BenchSampleTuple2K, 30>;
+    type Bench = Insertion<Source>;
 }

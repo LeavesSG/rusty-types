@@ -1,4 +1,11 @@
-export type {Digit, DigitCmp} from "./number/digit";
-export type {UIntCmp} from "./number/unsigned";
-export type {Ordering} from "./ordering/ordering";
-export type {IterableIter, IteratorNode} from "./iter/iter";
+export type * from "./bool/eq";
+export type * from "./number";
+export type * from "./string/string";
+
+export {Some, None} from "./option/option";
+export type * from "./option/option";
+
+export type * from "./tuple/tuple";
+export type * from "./ordering";
+
+export type * from "./sort";

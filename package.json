@@ -1,13 +1,23 @@
 {
-    "name": "ts-playground",
-    "private": true,
-    "version": "0.1.1",
+    "name": "rusty-types",
+    "version": "0.1.2",
+    "description": "A rust style typescript types-lib. Contains various data structure implementation with typescript type system.",
+    "author": {
+        "name": "Natsuha_SG",
+        "email": "l.lty@outlook.com"
+    },
+    "keywords": [
+        "types",
+        "util types"
+    ],
+    "categories": [
+        "Other"
+    ],
+    "license": "MIT",
     "type": "module",
-    "prettier": "@natsuha_sg/prettier-config",
+    "module": "./src/lib.ts",
     "scripts": {
-        "dev": "vite",
-        "build": "tsc && vite build",
-        "preview": "vite preview",
+        "type-check": "tsc -noEmit",
         "format": "pnpx prettier --write './src/**/*.{ts,json}'"
     },
     "devDependencies": {

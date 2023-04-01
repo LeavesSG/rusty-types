@@ -6,7 +6,7 @@ import {Option} from "../option/option";
  * If done, the final stage will be Option::None.
  *
  *
- * ### Usage
+ * ## Usage
  * ```typescript
  * type NextItem<Iter extends IterableIter> = Iter["next"] extends Some<
  *    infer Next extends IterableIter> ? Next["ptr"]: never;

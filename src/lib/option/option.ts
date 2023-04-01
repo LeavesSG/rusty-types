@@ -1,19 +1,19 @@
 /**
  * Unique symbol to mark a type as `None` variant.
  */
-const __None = Symbol("None");
+export const None = Symbol("None");
 
 /**
  * Unique symbol to mark a type as `Some` variant.
  */
-const __Some = Symbol("Some");
+export const Some = Symbol("Some");
 
 /**
  * Some value of type T.
  */
 export type Some<T> = {
     __ptr: T;
-    __marker: typeof __Some;
+    __marker: typeof Some;
 };
 
 /**
@@ -24,7 +24,7 @@ export type Some<T> = {
  * this seems to be uncalled for.
  */
 export type None = {
-    __marker: typeof __None;
+    __marker: typeof None;
 };
 
 /**

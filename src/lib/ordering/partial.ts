@@ -1,22 +1,23 @@
+import {Option, Some} from "./../option/option";
 import {Ordering} from "./ordering";
 /**
- * "PartialOrdering" indicates that the two values don't have to have a order.
+ * "PartialOrdering" indicates that the two values may or may not to have an order..
  *
- * ### Usage:
+ * ## Usage:
  * ```
- * type PartialOrd = Cmp<Vec2<2,3>,Vec2<3,2>>; // expected undefined
+ * type PartialOrd = Cmp<Vec2<2,3>,Vec2<3,2>>; // expected None
  * ```
  */
-export type PartialOrdering = Ordering | undefined;
+export type PartialOrdering = Option<Ordering>;
 
 /**
  * Make a total or partial order partial.
  *
- * ### Usage:
+ * ## Usage:
  * ```
- * type PartialOrd = ToPartial<Ordering.Equal>;  // expected Ordering.Equal | undefined
+ * type PartialOrd = ToPartial<Ordering.Equal>;  // expected Some<Ordering.Equal>
  * ```
  */
-export type ToPartial<T extends Ordering | PartialOrdering> = T extends T | undefined
+export type ToPartial<T extends Ordering | PartialOrdering> = T extends Option<T>
     ? T
-    : T | undefined;
+    : Some<T>;

@@ -1,7 +1,7 @@
 /**
  * Split the given string with given string.
  *
- * ### Usage:
+ * ## Usage:
  * ```typescript
  * type Splitted = Split<"123321","3">; // expected ["12","","21"];
  * type Splitted2 = Split<"123321","">; // expected ["1","2","3","3","2","1"];

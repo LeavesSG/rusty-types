@@ -1,14 +1,14 @@
 /**
- * Assert if Condition `T` is true, return {@link AssertPass}, **panic** on condition false
+ * Assert if Condition `T` is true, return `true`, **panic** on condition false
  */
 declare type Assert<T extends true> = T extends true ? true : never;
 
 declare type AssertNot<T extends false> = T extends false ? true : never;
 
 /**
- * Determine whether type `T` equals type `U`, return boolean
+ * Assert if type `T` extends type `U`, return `true`, **panic** on false,
  */
-declare type IsEqual<T, U> = T extends U ? (U extends T ? true : false) : false;
+declare type AssertExtends<T extends U, U> = T extends U ? true : never;
 
 /**
  * Type of assertion result

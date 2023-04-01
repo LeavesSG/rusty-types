@@ -1,4 +1,4 @@
-export type BenchSampleBenchSampleTuple2K = [
+export type BenchSampleTuple2K = [
     503,
     65,
     1605,

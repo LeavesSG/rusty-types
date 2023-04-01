@@ -1,5 +1,5 @@
 import {Ordering} from "../ordering/ordering";
-import {TupleNest} from "../tuple/tuple";
+import {Nest} from "../tuple/tuple";
 import {UIntCmp} from "../number/unsigned";
 
 export type TupleMerge<T extends number[], U extends number[]> = T extends [
@@ -25,7 +25,7 @@ type _TupleMerge<
     ? _TupleMerge<T, URest, [...Merged, U0], T0, U1>
     : [...Merged, U0, T0, ...T];
 
-export type Merge<T extends number[]> = _Merge<TupleNest<T>>;
+export type Merge<T extends number[]> = _Merge<Nest<T>>;
 type _Merge<T extends number[][]> = T["length"] extends 0 | 1
     ? T[0]
     : _Merge<_MergeInner<[], T>>;

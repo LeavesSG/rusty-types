@@ -21,7 +21,7 @@ type DigitCmpSource = [
 /**
  * Compare two digits, return {@link Ordering};
  *
- * ### Usage:
+ * ## Usage:
  * ```typescript
  * type Example = DigitCmp<1,2> // expected Ordering.Less
  * type Example2 = DigitCmp<'2',2>  // expected Ordering.Equal

@@ -5,7 +5,7 @@ import {Ordering} from "../ordering/ordering";
  * Enum of a digit.
  * The minimal unit of a number that could be directly compared.
  *
- * ### Usage:
+ * ## Usage:
  * ```typescript
  * const one = Digit.One;
  * Assert<IsEqual<Digit.Two,2>> // expected: true
@@ -52,15 +52,10 @@ export type DigitTuple = [
  * @deprecated
  * Compare two digits, return {@link Ordering}.
  */
-export type DigitCompareRec<T extends Digit, U extends Digit> = _DigitCompareRec<
-    T,
-    U,
-    DigitTuple
->;
-type _DigitCompareRec<
+export type DigitCompareRec<
     T extends Digit,
     U extends Digit,
-    P extends Digit[]
+    P extends any[] = DigitTuple
 > = IsEmpty<P> extends true
     ? never
     : P[0] extends T
@@ -71,7 +66,7 @@ type _DigitCompareRec<
     ? Ordering.Greater
     : P extends [Digit, ...infer Q]
     ? Q extends Digit[]
-        ? _DigitCompareRec<T, U, Q>
+        ? DigitCompareRec<T, U, Q>
         : never
     : never;
 

@@ -1,7 +1,7 @@
 /**
  * Represent the order of two element in one set.
  *
- * ### Usage:
+ * ## Usage:
  * ```typescript
  * type Ord = Ordering.Equal;
  * ```

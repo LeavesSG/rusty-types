@@ -1,7 +1,7 @@
 import {BenchSampleTuple2K} from "../../bench/tuple-sample/tuple";
 import {UIntCmp} from "../number/unsigned";
 import {Ordering} from "../ordering/ordering";
-import {TupleSlice} from "../tuple/tuple";
+import {Slice} from "../tuple/tuple";
 
 export type Quick<T extends number[]> = T extends [
     infer Anchor extends number,
@@ -38,6 +38,6 @@ type PartitionInner<
     : [Less, [Anchor, ...Equal], Greater];
 
 export module Test {
-    type TestTuple = TupleSlice<BenchSampleTuple2K, 90>;
+    type TestTuple = Slice<BenchSampleTuple2K, 90>;
     type a = Quick<TestTuple>;
 }

@@ -1,3 +1,4 @@
+import {Unwrap} from "./../option/option";
 import {Digit, DigitChar, DigitCmp} from "./digit";
 import {Ordering} from "../ordering/ordering";
 import {ToPartial} from "../ordering/partial";
@@ -6,7 +7,7 @@ import {Split} from "../string/string";
 /**
  * Convert a integer to a tuple of digit chars.
  *
- * ### Usage:
+ * ## Usage:
  * ```typescript
  * type Tuple = UIntTuple<417655> // expected ['4','1','7','6','5','5']
  * ```
@@ -14,11 +15,14 @@ import {Split} from "../string/string";
 type UIntTuple<T extends number> = Split<`${T}`, "">;
 
 /**
+ * # Unsigned integer comparison.
  * Compare two integers, return {@link Ordering}.
+ * Use CharTuple as its media, as string literals didn't have
+ * a compile time length.
  *
- * ### Usage:
+ * ## Usage:
  * ```typescript
- * type Ord = UIntCmp<37,73>; // expected Ordering.Less
+ * type Ord = UIntCmp<37,73>; // expected Some<Ordering.Less>
  * ```
  */
 export type UIntCmp<
@@ -26,26 +30,26 @@ export type UIntCmp<
     U extends number
 > = UIntTuple<T> extends infer TupleT extends DigitChar[]
     ? UIntTuple<U> extends infer TupleU extends DigitChar[]
-        ? _TupleLengthCompare<TupleT, TupleU> extends infer R extends Ordering
+        ? __TupleLengthCompare<TupleT, TupleU> extends infer R extends Ordering
             ? R extends Ordering.Equal
-                ? ToPartial<_TupleItemCompare<TupleT, TupleU>>
+                ? ToPartial<__TupleItemCompare<TupleT, TupleU>>
                 : ToPartial<R>
             : never
         : never
     : never;
-type _TupleItemCompare<T extends DigitChar[], U extends DigitChar[]> = T extends [
+type __TupleItemCompare<T extends DigitChar[], U extends DigitChar[]> = T extends [
     DigitChar,
     ...infer R extends DigitChar[]
 ]
     ? U extends [DigitChar, ...infer S extends DigitChar[]]
         ? DigitCmp<T[0], U[0]> extends infer X
             ? X extends Ordering.Equal
-                ? _TupleItemCompare<R, S>
+                ? __TupleItemCompare<R, S>
                 : X
             : never
         : Ordering.Equal
     : Ordering.Equal;
-type _TupleLengthCompare<
+type __TupleLengthCompare<
     T extends [...DigitChar[]],
     U extends [...DigitChar[]]
 > = T["length"] extends Digit
@@ -55,3 +59,11 @@ type _TupleLengthCompare<
     : U["length"] extends Digit
     ? Ordering.Greater
     : UIntCmp<T["length"], U["length"]>;
+
+declare module Test {
+    type Num1 = 12315;
+    type Num2 = 13214;
+    type ExpectedLess = AssertExtends<Unwrap<UIntCmp<Num1, Num2>>, Ordering.Less>;
+    type ExpectedEqual = AssertExtends<Unwrap<UIntCmp<Num1, Num1>>, Ordering.Equal>;
+    type ExpectedGreater = AssertExtends<Unwrap<UIntCmp<Num2, Num1>>, Ordering.Greater>;
+}

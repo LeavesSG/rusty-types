@@ -1,6 +1,6 @@
 import {UIntCmp} from "../number/unsigned";
 import {Ordering} from "../ordering/ordering";
-import {TupleSlice} from "../tuple/tuple";
+import {Slice} from "../tuple/tuple";
 import {type BenchSampleTuple2K} from "../../bench/tuple-sample/tuple";
 
 export type Insertion<T extends number[]> = _InsertionLoop<[], T>;
@@ -23,6 +23,6 @@ type _InsertElement<
 
 export module Bench {
     // default compiler configuration only support N ~ 302
-    type Tuple = TupleSlice<BenchSampleTuple2K, 10>;
+    type Tuple = Slice<BenchSampleTuple2K, 10>;
     export type Bench = Insertion<Tuple>;
 }

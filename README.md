@@ -1,12 +1,12 @@
 # Rusty Types
 
-This is a TypeScript playground that implement various basic data structures with the type system in Rust lang style.
+This is a Typescript playground that implement various basic data structures with the type system in Rust lang style.
 
 ## Implemented
 
 ### Option
 
-An enum from Rust, indicates a "nullable" value. It's implemented with 2 unique symbol type as its two enum variant: `Some` and `None`. We'll avoid using `undefined`, as its an exhausting feature in Javascript. Any types in this lib that may or may not containes a value will return `Option<T>`.
+An enum from Rust, indicates a "nullable" value. It's implemented with 2 unique symbol type as its two enum variant: `Some` and `None`. We'll avoid using `undefined`, as its an exhausting feature in Javascript. Any types in this lib that may or may not contains a value will return `Option<T>`.
 
 ### Ordering
 
@@ -23,9 +23,9 @@ Indicates an Array-liked type that contains fixed length at compile-time and fix
 
 ### Sort
 
-Currently only `Selection`, `Insertion`, `Merge` and `Quick` were inplemented. Other fundamental sorting methods are either not suitable for type system, or tricky for me to implement.
+Currently only `Selection`, `Insertion`, `Merge` and `Quick` were implemented. Other fundamental sorting methods are either not suitable for type system, or tricky for me to implement.
 
-Each methods provides ability to sort tuple with 300~1000 unsigned integers. And this capability might slightly affected after supporting signed integers and floats in the future.
+Each method provides ability to sort tuple with 300~1000 unsigned integers. And this capability might slightly affected after supporting signed integers and floats in the future.
 
 ## Struggling
 

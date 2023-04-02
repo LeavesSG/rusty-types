@@ -17,7 +17,7 @@ export type Bfs<
 > = Q extends [infer Ptr extends number, ...infer Rest extends Queue]
     ? G["vertices"][Ptr] extends S
         ? [Some<Ptr>, Visited]
-        : PushQueue<Rest, G["vertices"][Ptr]["adjacent"], Visited, Ptr> extends [
+        : PushQueue<Rest, G["edges"][Ptr], Visited, Ptr> extends [
               infer Q extends Queue,
               infer Visited extends Dict
           ]

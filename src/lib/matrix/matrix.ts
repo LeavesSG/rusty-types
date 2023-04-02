@@ -22,7 +22,7 @@ export type IntoGraph<
     M extends Matrix<number>,
     RI extends unknown[] = [],
     CI extends unknown[] = [],
-    G extends Graph = GraphNew<[]>,
+    G extends Graph = GraphNew<[], []>,
     B extends number[][] = BaseMatrix<M["tier"]>
 > = RI["length"] extends M["tier"]
     ? G
@@ -34,11 +34,8 @@ export type IntoGraph<
           [...CI, unknown],
           PushVertex<
               G,
-              VertexNew<
-                  G["vertices"]["length"],
-                  M["buf"][CI["length"]][RI["length"]],
-                  GetAdjacent<CI, RI, M, B>
-              >
+              VertexNew<G["vertices"]["length"], M["buf"][CI["length"]][RI["length"]]>,
+              GetAdjacent<CI, RI, M, B>
           >,
           B
       >;
@@ -89,10 +86,10 @@ declare module Test {
     type Assertion2 = AssertSatisfy<
         M2["vertices"],
         [
-            VertexNew<0, "first", [1, 2, 3]>,
-            VertexNew<1, "third", [0, 2, 3]>,
-            VertexNew<2, "second", [0, 1, 3]>,
-            VertexNew<3, "fourth", [0, 1, 2]>
+            VertexNew<0, "first">,
+            VertexNew<1, "third">,
+            VertexNew<2, "second">,
+            VertexNew<3, "fourth">
         ]
     >;
 }

@@ -4,7 +4,7 @@ import {IterableIter} from "./iter";
 import {IntoIter as ArrayIntoIter} from "./array";
 
 /**
- * Convert a tuple type T into IterableIter type. Return {@link IterableIter}
+ * Convert a tuple type T into IterableIter type. Returns {@link IterableIter}
  *
  * ## Usage
  * ```typescript
@@ -18,7 +18,7 @@ import {IntoIter as ArrayIntoIter} from "./array";
 export type IntoIter<T extends Tuple> = Unwrap<ArrayIntoIter<T>>;
 
 /**
- * Collect an IterableIter type into tuple form. Return {@link Tuple}
+ * Collect an IterableIter type into tuple form. Returns {@link Tuple}
  *
  * ## Usage
  * ```typescript

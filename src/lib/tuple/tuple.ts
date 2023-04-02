@@ -21,7 +21,7 @@ export type Tuple = [unknown, ...unknown[]];
 export type TypedTuple<T> = [T, ...T[]];
 
 /**
- * Return whether a tuple is empty;
+ * Returns whether a tuple is empty;
  *
  * ## Usage:
  * ```typescript
@@ -32,7 +32,7 @@ export type TypedTuple<T> = [T, ...T[]];
 export type IsEmpty<T extends [...any[]]> = IsEqual<T["length"], 0>;
 
 /**
- * Return the indices of a tuple, in union type.
+ * Returns the indices of a tuple, in union type.
  *
  * ## Usage:
  * ```typescript
@@ -43,7 +43,7 @@ export type IndicesUnion<T extends Tuple> = Extract<keyof T, `${number}`>;
 
 /**
  * Remove the first element from tuple.
- * Return both the removed item and the rest array, as a new tuple.
+ * Returns both the removed item and the rest array, as a new tuple.
  */
 export type UnShift<T extends any[]> = T extends [infer Removed, ...infer Rest]
     ? [Removed, Rest]
@@ -51,7 +51,7 @@ export type UnShift<T extends any[]> = T extends [infer Removed, ...infer Rest]
 
 /**
  * Remove the first element from tuple.
- * Return both the removed item and the rest array, as a new tuple.
+ * Returns both the removed item and the rest array, as a new tuple.
  */
 export type Pop<T extends any[]> = T extends [...infer Rest, infer Removed]
     ? [Removed, Rest]

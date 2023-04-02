@@ -1,3 +1,7 @@
+/**
+ * # Vertex
+ * An interface of a `Vertex` in a `Graph`
+ */
 interface Vertex {
     /**
      * Unique key of the vertex, indicators its position in `Graph["vertices"]`
@@ -13,6 +17,10 @@ interface Vertex {
     adjacent: Vertex["index"][];
 }
 
+/**
+ * Construct a `Vertex` type from its properties.
+ * Returns {@link Vertex}
+ */
 export type VertexNew<
     I extends Vertex["index"],
     B extends Vertex["buf"],
@@ -23,15 +31,29 @@ export type VertexNew<
     adjacent: A;
 };
 
+/**
+ * # Graph
+ * An Interface of a `Graph` Api.
+ */
 export interface Graph {
-    // the graph vertices
+    /**
+     * vertices inside the graph.
+     */
     vertices: Vertex[];
 }
 
+/**
+ * Construct a `Graph` type from its vertices.
+ * Returns {@link Graph}
+ */
 export type GraphNew<V extends Graph["vertices"]> = {
     vertices: V;
 };
 
+/**
+ * Push a new `Vertex` into the given `Graph`.
+ * Returns a new {@link Graph}
+ */
 export type PushVertex<G extends Graph, V extends Vertex> = GraphNew<
     [...G["vertices"], V]
 >;

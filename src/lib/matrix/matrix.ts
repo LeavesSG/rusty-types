@@ -18,7 +18,7 @@ type BaseMatrix<
         : BaseMatrix<T, [...Rows, Row], [], Counter>
     : BaseMatrix<T, Rows, [...Row, Counter["length"]], [...Counter, unknown]>;
 
-type IntoGraph<
+export type IntoGraph<
     M extends Matrix<number>,
     RI extends unknown[] = [],
     CI extends unknown[] = [],

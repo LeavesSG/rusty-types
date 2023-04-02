@@ -2,7 +2,7 @@
  * # Vertex
  * An interface of a `Vertex` in a `Graph`
  */
-interface Vertex {
+export interface Vertex {
     /**
      * Unique key of the vertex, indicators its position in `Graph["vertices"]`
      */

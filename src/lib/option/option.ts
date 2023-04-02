@@ -16,6 +16,11 @@ export type Some<T> = {
     __marker: typeof Some;
 };
 
+export type NoneT<T> = {
+    __ptr: T;
+    __marker: typeof None;
+};
+
 /**
  * No value of type T.
  *
@@ -23,9 +28,7 @@ export type Some<T> = {
  * However, in a language which wholely lives before compilation,
  * this seems to be uncalled for.
  */
-export type None = {
-    __marker: typeof None;
-};
+export type None = NoneT<any>;
 
 /**
  * The `Option` type, indicate that a value could be exist or not.

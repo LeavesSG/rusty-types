@@ -1,7 +1,8 @@
 import {Option, Some} from "./../option/option";
 import {Ordering} from "./ordering";
 /**
- * "PartialOrdering" indicates that the two values may or may not to have an order..
+ * "PartialOrdering" indicates that the two values may or may not to have an order.
+ * - Caution: Ordering **does not** satisfy PartialOrdering!
  *
  * ## Usage:
  * ```

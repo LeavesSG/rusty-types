@@ -1,5 +1,9 @@
+import {TypedTuple} from "../tuple/tuple";
+
 /**
- * Split the given string with given string.
+ * Split the given `string` with another `string` as pattern.
+ * Behave like `String.split`.
+ * Return {@link TypedTuple<string>}
  *
  * ## Usage:
  * ```typescript

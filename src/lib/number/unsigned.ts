@@ -63,7 +63,7 @@ type __TupleLengthCompare<
 declare module Test {
     type Num1 = 12315;
     type Num2 = 13214;
-    type ExpectedLess = AssertExtends<Unwrap<UIntCmp<Num1, Num2>>, Ordering.Less>;
-    type ExpectedEqual = AssertExtends<Unwrap<UIntCmp<Num1, Num1>>, Ordering.Equal>;
-    type ExpectedGreater = AssertExtends<Unwrap<UIntCmp<Num2, Num1>>, Ordering.Greater>;
+    type ExpectedLess = AssertSatisfy<Unwrap<UIntCmp<Num1, Num2>>, Ordering.Less>;
+    type ExpectedEqual = AssertSatisfy<Unwrap<UIntCmp<Num1, Num1>>, Ordering.Equal>;
+    type ExpectedGreater = AssertSatisfy<Unwrap<UIntCmp<Num2, Num1>>, Ordering.Greater>;
 }

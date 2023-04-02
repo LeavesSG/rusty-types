@@ -1,58 +1,98 @@
-// import {Graph} from "../graph/graph";
+import {GraphNew, VertexNew} from "../graph/graph";
+import {Graph, PushVertex} from "../graph/graph";
+import {Distribute, RemoveFirstMatch} from "../lib";
 
-// export type Matrix<Tier extends number> = {
-//     tier: Tier;
-//     buf: any[][];
-// };
+export type Matrix<Tier extends number> = {
+    tier: Tier;
+    buf: unknown[][];
+};
 
-// export type IntoGraph<T extends number, M extends Matrix<T>> = 1;
-// type _IntoGraph<
-//     T extends number,
-//     M extends Matrix<T>,
-//     RI extends any[],
-//     CI extends any[],
-//     G extends Graph
-// > = RI["length"] extends M["tier"]
-//     ? G
-//     : CI["length"] extends M["tier"]
-//     ? _IntoGraph<T, M, [...RI, any], [], G>
-//     : {
-//           [_RI in GetAdjacentNumber<RI, T>[number] extends infer Indices extends number
-//               ? Indices
-//               : never]: {
-//               [_CI in GetAdjacentNumber<
-//                   CI,
-//                   T
-//               >[number] extends infer Indices extends number
-//                   ? Indices
-//                   : never]: [_RI, _CI];
-//           };
-//       };
+type BaseMatrix<
+    T extends number,
+    Rows extends number[][] = [],
+    Row extends number[] = [],
+    Counter extends unknown[] = []
+> = Row["length"] extends T
+    ? Rows["length"] extends T
+        ? Rows
+        : BaseMatrix<T, [...Rows, Row], [], Counter>
+    : BaseMatrix<T, Rows, [...Row, Counter["length"]], [...Counter, unknown]>;
 
-// type GetAdjacentNumber<Index extends any[], T extends number> = [
-//     ...(Index extends [any, ...infer Rest extends any[]] ? [Rest["length"]] : []),
-//     Index["length"],
-//     ...([...Index, any]["length"] extends T ? [] : [[...Index, any]["length"]])
-// ];
+type IntoGraph<
+    M extends Matrix<number>,
+    RI extends unknown[] = [],
+    CI extends unknown[] = [],
+    G extends Graph = GraphNew<[]>,
+    B extends number[][] = BaseMatrix<M["tier"]>
+> = RI["length"] extends M["tier"]
+    ? G
+    : CI["length"] extends M["tier"]
+    ? IntoGraph<M, [...RI, unknown], [], G, B>
+    : IntoGraph<
+          M,
+          RI,
+          [...CI, unknown],
+          PushVertex<
+              G,
+              VertexNew<
+                  G["vertices"]["length"],
+                  M["buf"][CI["length"]][RI["length"]],
+                  GetAdjacent<CI, RI, M, B>
+              >
+          >,
+          B
+      >;
 
-// type GetAdjacent<
-//     T extends number,
-//     RBuf extends any[],
-//     LBuf extends any[],
-//     M extends Matrix<T>
-// > = {
-//     [RI in GetAdjacentNumber<RBuf, T>[number] extends infer Indices extends number
-//         ? Indices
-//         : never]: {
-//         [CI in GetAdjacentNumber<LBuf, T>[number] extends infer Indices extends number
-//             ? Indices
-//             : never]: M["buf"][CI][RI];
-//     };
-// };
+type GetAdjacentNumber<Index extends unknown[], T extends number> = [
+    ...(Index extends [unknown, ...infer Rest extends unknown[]] ? [Rest["length"]] : []),
+    Index["length"],
+    ...([...Index, unknown]["length"] extends T ? [] : [[...Index, unknown]["length"]])
+];
 
-// type Mat4 = {
-//     tier: 4;
-//     buf: [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]];
-// };
+type GetAdjacent<
+    RBuf extends unknown[],
+    LBuf extends unknown[],
+    M extends Matrix<number>,
+    B extends number[][] = BaseMatrix<M["tier"]>
+> = Distribute<
+    GetAdjacentNumber<LBuf, M["tier"]>,
+    GetAdjacentNumber<RBuf, M["tier"]>
+> extends infer Indices extends [number, number][]
+    ? MapToMatrixValue<RemoveFirstMatch<Indices, [LBuf["length"], RBuf["length"]]>, B>
+    : never;
 
-// type z = GetAdjacent<4, [1, 1], [1, 1], Mat4>;
+type MapToMatrixValue<
+    T extends [number, number][],
+    D extends number[][],
+    Mapped extends unknown[] = []
+> = T extends [
+    [infer RI extends number, infer CI extends number],
+    ...infer Rest extends [number, number][]
+]
+    ? MapToMatrixValue<Rest, D, [...Mapped, D[RI][CI]]>
+    : Mapped;
+
+declare module Test {
+    type Mat4 = {
+        tier: 4;
+        buf: [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]];
+    };
+    type Mat2 = {
+        tier: 2;
+        buf: [["first", "second"], ["third", "fourth"]];
+    };
+
+    type M1 = IntoGraph<Mat4>;
+    type Assertion1 = AssertSatisfy<M1["vertices"]["length"], 16>;
+
+    type M2 = IntoGraph<Mat2>;
+    type Assertion2 = AssertSatisfy<
+        M2["vertices"],
+        [
+            VertexNew<0, "first", [1, 2, 3]>,
+            VertexNew<1, "third", [0, 2, 3]>,
+            VertexNew<2, "second", [0, 1, 3]>,
+            VertexNew<3, "fourth", [0, 1, 2]>
+        ]
+    >;
+}

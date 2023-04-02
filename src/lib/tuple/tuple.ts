@@ -98,6 +98,16 @@ type SliceRev<T extends Tuple, U extends number> = T extends [
     ? Rest
     : never;
 
+type Extremum<
+    T extends any[],
+    U extends number = T extends [infer First] ? First : number,
+    V extends Ordering.Greater | Ordering.Less = Ordering.Less
+> = T extends [infer First extends number, ...any[]]
+    ? UIntCmp<First, U> extends Some<V>
+        ? Extremum<SliceRev<T, 1>, T[0], V>
+        : Extremum<SliceRev<T, 1>, U, V>
+    : U;
+
 /**
  * Find the min number in a number tuple.
  *
@@ -110,11 +120,59 @@ type SliceRev<T extends Tuple, U extends number> = T extends [
 export type Min<
     T extends any[],
     U extends number = T extends [infer First] ? First : number
-> = T extends [infer First extends number, ...any[]]
-    ? UIntCmp<First, U> extends Some<Ordering.Less>
-        ? Min<SliceRev<T, 1>, T[0]>
-        : Min<SliceRev<T, 1>, U>
-    : U;
+> = Extremum<T, U, Ordering.Less>;
+
+/**
+ * Find the max number in a number tuple.
+ *
+ * ## Usage
+ * ```typescript
+ * type Source = [1,2,3,4];
+ * type Res = Max<Source>;   // expected 4
+ * ```
+ */
+export type Max<
+    T extends any[],
+    U extends number = T extends [infer First] ? First : number
+> = Extremum<T, U, Ordering.Greater>;
+
+/**
+ * Convert every item in Tuple in to its nested form.
+ *
+ * ## Usage
+ * ```typescript
+ * type Source = [1,2,3];
+ * type Res = Nest<Source>; // expected [[1],[2],[3]]
+ * ```
+ */
+export type Nest<T extends any[], N extends any[][] = []> = T extends [
+    infer R,
+    ...infer Rest extends any[]
+]
+    ? Nest<Rest, [...N, [R]]>
+    : N;
+
+/**
+ * Distribute every element in tuple T to tuple U, return a new tuple
+ * with elements of combinations of items in T and U.
+ *
+ * ## Usage
+ * ```typescript
+ * type Source1 = [1, 2];
+ * type Source2 = ["A", "B"];
+ * type Res = Distribute<Source1, Source2>; // expected: [[1, "A"], [1, "B"], [2, "A"], [2, "B"]]
+ * ```
+ */
+export type Distribute<
+    T extends any[],
+    U extends any[],
+    Inner extends any[] = U,
+    Done extends any[] = []
+> = Inner extends [infer InPtr, ...infer InRest]
+    ? Distribute<T, U, InRest, [...Done, [T[0], InPtr]]>
+    : T extends [any, ...infer OutRest extends Tuple]
+    ? Case<"Next", Distribute<OutRest, U, U, Done>>
+    : Case<"Escape", Done>;
 
 /**
  * Given a tuple T and a type U, return subset without
@@ -135,18 +193,7 @@ export type RemoveFirstMatch<T extends any[], U, Done extends any[] = []> = T ex
         : RemoveFirstMatch<Rest, U, [...Done, Ptr]>
     : [...T, ...Done];
 
-/**
- * Convert every item in Tuple in to its nested form.
- *
- * ## Usage
- * ```typescript
- * type Source = [1,2,3];
- * type Res = Nest<Source>; // expected [[1],[2],[3]]
- * ```
- */
-export type Nest<T extends any[], N extends any[][] = []> = T extends [
-    infer R,
-    ...infer Rest extends any[]
-]
-    ? Nest<Rest, [...N, [R]]>
-    : N;
+export type TupleNewIndex<
+    L extends number,
+    D extends number[] = []
+> = D["length"] extends L ? D : TupleNewIndex<L, [...D, D["length"]]>;

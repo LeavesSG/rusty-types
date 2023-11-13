@@ -1,43 +1,64 @@
 import {GraphNew, VertexNew} from "../graph/graph";
 import {Graph, PushVertex} from "../graph/graph";
-import {Distribute, RemoveFirstMatch} from "../lib";
+import {Distribute, Option, Some, None} from "../lib";
 
-export type Matrix<Tier extends number> = {
+export interface Matrix<Tier extends number> {
+    /**
+     * The tier of the matrix, a matrix with tier = 4 will be a 4x4 matrix.
+     */
     tier: Tier;
-    buf: unknown[][];
-};
+    /**
+     * The buffer array of the matrix.
+     */
+    buf: any[][];
+}
 
+export interface HollowMatrix<Tier extends number> extends Matrix<Tier> {
+    tier: Tier;
+    /**
+     * The buffer array of the matrix. Either {@link Some<any>} indicates there was a value,
+     * or {@link None} indicates that there's not.
+     */
+    buf: Option<any>[][];
+}
+
+/**
+ * Base Matrix. With each item is its index in buffer array.
+ */
 type BaseMatrix<
     T extends number,
-    Rows extends number[][] = [],
-    Row extends number[] = [],
-    Counter extends unknown[] = []
-> = Row["length"] extends T
-    ? Rows["length"] extends T
-        ? Rows
-        : BaseMatrix<T, [...Rows, Row], [], Counter>
-    : BaseMatrix<T, Rows, [...Row, Counter["length"]], [...Counter, unknown]>;
+    __Rows extends number[][] = [],
+    __Row extends number[] = [],
+    __Counter extends unknown[] = []
+> = __Row["length"] extends T
+    ? __Rows["length"] extends T
+        ? __Rows
+        : BaseMatrix<T, [...__Rows, __Row], [], __Counter>
+    : BaseMatrix<T, __Rows, [...__Row, __Counter["length"]], [...__Counter, unknown]>;
 
 export type IntoGraph<
     M extends Matrix<number>,
-    RI extends unknown[] = [],
-    CI extends unknown[] = [],
-    G extends Graph = GraphNew<[], []>,
-    B extends number[][] = BaseMatrix<M["tier"]>
-> = RI["length"] extends M["tier"]
-    ? G
-    : CI["length"] extends M["tier"]
-    ? IntoGraph<M, [...RI, unknown], [], G, B>
+    __RI extends unknown[] = [],
+    __CI extends unknown[] = [],
+    __G extends Graph = GraphNew<[], []>,
+    __B extends number[][] = BaseMatrix<M["tier"]>
+> = __RI["length"] extends M["tier"]
+    ? __G
+    : __CI["length"] extends M["tier"]
+    ? IntoGraph<M, [...__RI, unknown], [], __G, __B>
     : IntoGraph<
           M,
-          RI,
-          [...CI, unknown],
+          __RI,
+          [...__CI, unknown],
           PushVertex<
-              G,
-              VertexNew<G["vertices"]["length"], M["buf"][CI["length"]][RI["length"]]>,
-              GetAdjacent<CI, RI, M, B>
+              __G,
+              VertexNew<
+                  __G["vertices"]["length"],
+                  M["buf"][__CI["length"]][__RI["length"]]
+              >,
+              GetAdjacent<__CI, __RI, M, __B>
           >,
-          B
+          __B
       >;
 
 type GetAdjacentNumber<Index extends unknown[], T extends number> = [
@@ -48,15 +69,28 @@ type GetAdjacentNumber<Index extends unknown[], T extends number> = [
 
 type GetAdjacent<
     RBuf extends unknown[],
-    LBuf extends unknown[],
+    CBuf extends unknown[],
     M extends Matrix<number>,
     B extends number[][] = BaseMatrix<M["tier"]>
 > = Distribute<
-    GetAdjacentNumber<LBuf, M["tier"]>,
+    GetAdjacentNumber<CBuf, M["tier"]>,
     GetAdjacentNumber<RBuf, M["tier"]>
 > extends infer Indices extends [number, number][]
-    ? MapToMatrixValue<RemoveFirstMatch<Indices, [LBuf["length"], RBuf["length"]]>, B>
+    ? MapToMatrixValue<FilterDistance1<Indices, [CBuf["length"], RBuf["length"]]>, B>
     : never;
+
+type FilterDistance1<
+    T extends [number, number][],
+    Source extends [number, number],
+    Filtered extends [number, number][] = []
+> = T extends [
+    [infer RI extends number, infer CI extends number],
+    ...infer Rest extends [number, number][]
+]
+    ? [RI extends Source[0] ? 1 : 0, CI extends Source[1] ? 1 : 0] extends [1, 0] | [0, 1]
+        ? FilterDistance1<Rest, Source, [...Filtered, [RI, CI]]>
+        : FilterDistance1<Rest, Source, Filtered>
+    : Filtered;
 
 type MapToMatrixValue<
     T extends [number, number][],

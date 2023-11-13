@@ -27,7 +27,7 @@
 
         "useDefineForClassFields": true,
         "module": "ESNext",
-        "lib": ["ESNext", "DOM"],
+        "lib": ["ESNext"],
         "moduleResolution": "Node",
         "sourceMap": true,
         "resolveJsonModule": true,

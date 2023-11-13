@@ -31,7 +31,6 @@ export enum Digit {
 export type DigitChar = `${Digit}`;
 
 /**
- * @deprecated
  * @constant Tuple Const that contains all variant of number digit.
  * Used for recursion based digit comparison.
  */

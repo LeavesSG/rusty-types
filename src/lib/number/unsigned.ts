@@ -3,6 +3,8 @@ import {Digit, DigitChar, DigitCmp} from "./digit";
 import {Ordering} from "../ordering/ordering";
 import {ToPartial} from "../ordering/partial";
 import {Split} from "../string/string";
+import {Pop} from "../lib";
+import {DigitDistance} from "./digit-minus";
 
 /**
  * Convert a integer to a tuple of digit chars.
@@ -59,6 +61,13 @@ type __TupleLengthCompare<
     : U["length"] extends Digit
     ? Ordering.Greater
     : UIntCmp<T["length"], U["length"]>;
+
+export type UintDistance<T extends number, U extends number> = [
+    Pop<UIntTuple<T>>[0],
+    Pop<UIntTuple<U>>[0]
+] extends [infer R extends DigitChar, infer S extends DigitChar]
+    ? DigitDistance<R, S>
+    : never;
 
 declare module Test {
     type Num1 = 12315;

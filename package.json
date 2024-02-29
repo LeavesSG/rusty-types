@@ -1,7 +1,7 @@
 {
-    "name": "rusty-types",
+    "name": "type-gym-playground",
     "version": "0.1.2",
-    "description": "A rust style typescript types-lib. Contains various data structure implementation with typescript type system.",
+    "description": "TypeScript playground contains various type gymnastics.",
     "author": {
         "name": "Natsuha_SG",
         "email": "l.lty@outlook.com"
@@ -17,12 +17,9 @@
     "type": "module",
     "module": "./src/lib.ts",
     "scripts": {
-        "type-check": "tsc -noEmit",
-        "format": "pnpx prettier --write './src/**/*.{ts,json}'"
+        "type-check": "tsc -noEmit"
     },
     "devDependencies": {
-        "typescript": "latest",
-        "@natsuha_sg/prettier-config": "latest",
-        "prettier": "latest"
+        "typescript": "latest"
     }
 }

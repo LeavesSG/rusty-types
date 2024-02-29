@@ -1,4 +1,4 @@
-# Rusty Types
+# TypeGymPlayGround
 
 This is a Typescript playground that implement various basic data structures with the type system in Rust lang style.
 
@@ -34,4 +34,4 @@ Each method provides ability to sort tuple with 300~1000 unsigned integers. And 
 
 ## Planned
 
-- Graph Api and Graph searching algorithms.
+- ~~Graph Api and Graph searching algorithms.~~
